@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>微光 - 守护每个孩子的心理健康</title>
+  <style>
+    :root {
+      --primary: #5f8f62;
+      --primary-hover: #4f7d53;
+      --accent: #f6e7a1;
+      --text: #333333;
+      --card: rgba(255, 255, 255, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      background: linear-gradient(135deg, #fff9e6 0%, #f7fbe9 45%, #e8f5e9 100%);
+      color: var(--text);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(2px);
+    }
+
+    body::before {
+      width: 320px;
+      height: 320px;
+      left: -80px;
+      top: 120px;
+      background: radial-gradient(circle, rgba(255, 236, 170, 0.35) 0%, rgba(255, 236, 170, 0.08) 68%, rgba(255, 236, 170, 0) 100%);
+    }
+
+    body::after {
+      width: 420px;
+      height: 420px;
+      right: -120px;
+      bottom: 40px;
+      background: radial-gradient(circle, rgba(152, 213, 171, 0.32) 0%, rgba(152, 213, 171, 0.06) 65%, rgba(152, 213, 171, 0) 100%);
+    }
+
+    .bg-shape {
+      position: fixed;
+      z-index: -1;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(58, 110, 165, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 18px;
+      margin-top: 20px;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      animation: fadeUp 0.7s ease-out both;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 1px;
+    }
+
+    .logo-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #f6e7a1;
+      box-shadow: 0 0 0 4px rgba(246, 231, 161, 0.35);
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 26px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #405168;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      margin: 70px auto 0;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.62);
+      backdrop-filter: blur(14px);
+      border-radius: 30px;
+      box-shadow: 0 20px 48px rgba(47, 58, 74, 0.14), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+      padding: 70px 28px;
+      text-align: center;
+      animation: fadeUp 0.9s ease-out 0.15s both;
+    }
+
+    .slogan {
+      font-size: clamp(30px, 4vw, 50px);
+      font-weight: 900;
+      letter-spacing: 4px;
+      line-height: 1.25;
+      color: #23466f;
+      margin-bottom: 26px;
+      animation: fadeInSoft 0.85s ease-out 0.35s both;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), #4c8fd6);
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(58, 110, 165, 0.28);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+      animation: fadeInSoft 0.85s ease-out 0.5s both;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px) scale(1.06);
+      background: linear-gradient(90deg, var(--primary-hover), #6ea07a);
+      box-shadow: 0 14px 24px rgba(95, 143, 98, 0.36);
+    }
+
+    .cta-button {
+      animation: fadeInSoft 0.85s ease-out 0.5s both, glimmerBreath 2.6s ease-in-out infinite;
+    }
+
+    @keyframes glimmerBreath {
+      0%,
+      100% {
+        box-shadow: 0 8px 20px rgba(95, 143, 98, 0.25), 0 0 0 0 rgba(246, 231, 161, 0.15);
+      }
+      50% {
+        box-shadow: 0 10px 24px rgba(95, 143, 98, 0.34), 0 0 18px 4px rgba(246, 231, 161, 0.24);
+      }
+    }
+
+    .process {
+      margin-top: 48px;
+      text-align: left;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(255, 255, 255, 0.46);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 22px;
+      padding: 26px 24px;
+    }
+
+    .process-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #2a4f79;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    .process-grid {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .process-item {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 16px;
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #314760;
+      font-weight: 700;
+      opacity: 0;
+      transform: translateY(36px);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .process-grid.is-inview .process-item:nth-child(1) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.06s;
+    }
+
+    .process-grid.is-inview .process-item:nth-child(2) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.16s;
+    }
+
+    .process-grid.is-inview .process-item:nth-child(3) {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.26s;
+    }
+
+    .icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d8e9ff, #f6ddf4);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      box-shadow: 0 6px 14px rgba(58, 110, 165, 0.15);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInSoft {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .process-grid .process-item {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(47, 58, 74, 0.45);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .modal-backdrop.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-backdrop--fullscreen {
+      align-items: stretch;
+      justify-content: stretch;
+      padding: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(232, 244, 255, 0.96) 0%,
+        rgba(245, 248, 255, 0.94) 42%,
+        rgba(255, 236, 245, 0.92) 100%
+      );
+    }
+
+    .mood-modal-shell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: clamp(20px, 4vh, 40px) clamp(18px, 4vw, 28px) 32px;
+      box-sizing: border-box;
+    }
+
+    .mood-modal-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      border-radius: 26px;
+      box-shadow: 0 20px 60px rgba(58, 90, 120, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(14px);
+      padding: clamp(22px, 3.5vw, 32px);
+    }
+
+    .mood-textarea--large {
+      min-height: min(42vh, 280px);
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .screening-report {
+      border-radius: 20px;
+      padding: 22px 20px 18px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.98) 100%);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      box-shadow: 0 12px 36px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.72;
+      max-height: min(58vh, 520px);
+      overflow-y: auto;
+    }
+
+    .screening-report__head {
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .screening-report__title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .screening-report__meta {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .screening-report__risk-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .risk-label-text {
+      font-size: 12px;
+      font-weight: 800;
+      color: #475569;
+      letter-spacing: 0.5px;
+    }
+
+    .risk-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .risk-pill--low {
+      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      color: #166534;
+      border: 1px solid rgba(34, 197, 94, 0.45);
+    }
+
+    .risk-pill--mid {
+      background: linear-gradient(135deg, #ffedd5, #fed7aa);
+      color: #c2410c;
+      border: 1px solid rgba(249, 115, 22, 0.45);
+    }
+
+    .risk-pill--high {
+      background: linear-gradient(135deg, #ffe4e6, #fecdd3);
+      color: #be123c;
+      border: 1px solid rgba(244, 63, 94, 0.5);
+    }
+
+    .screening-section {
+      margin-bottom: 18px;
+    }
+
+    .screening-section h4 {
+      font-size: 13px;
+      font-weight: 900;
+      color: #1e3a5f;
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+
+    .screening-section p {
+      margin: 0 0 8px;
+      color: #475569;
+      font-weight: 500;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4 {
+      color: #1e3a5f;
+      margin: 10px 0 8px;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .markdown-body h3 {
+      font-size: 14px;
+    }
+
+    .markdown-body p {
+      margin: 0 0 8px;
+      color: #475569;
+      line-height: 1.75;
+    }
+
+    .markdown-body ul,
+    .markdown-body ol {
+      margin: 6px 0 10px 18px;
+      color: #475569;
+    }
+
+    .markdown-body li {
+      margin-bottom: 4px;
+      line-height: 1.7;
+    }
+
+    .markdown-body blockquote {
+      margin: 8px 0 10px;
+      padding: 10px 12px;
+      border-left: 4px solid #93c5fd;
+      background: rgba(239, 246, 255, 0.8);
+      border-radius: 8px;
+      color: #334155;
+    }
+
+    .screening-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin: 14px 0 6px;
+    }
+
+    .mood-metric__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+
+    .mood-metric__val {
+      font-variant-numeric: tabular-nums;
+      color: #0f172a;
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(226, 232, 240, 0.95);
+      overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .progress-fill--bar-low {
+      background: linear-gradient(90deg, #4ade80, #22c55e);
+    }
+
+    .progress-fill--bar-mid {
+      background: linear-gradient(90deg, #fb923c, #f97316);
+    }
+
+    .progress-fill--bar-high {
+      background: linear-gradient(90deg, #fb7185, #e11d48);
+    }
+
+    .progress-fill--resilience {
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+    }
+
+    .screening-disclaimer {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.55);
+      font-size: 11px;
+      line-height: 1.6;
+      color: #94a3b8;
+    }
+
+    .report-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-download-report {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 45%, #4f46e5 100%);
+      box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-download-report:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-download-report svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 20mm;
+      }
+
+      body {
+        background: #fff !important;
+      }
+
+      body::before,
+      body::after,
+      .bg-shape,
+      .navbar,
+      .process,
+      .toolbox-section,
+      .report-actions,
+      .modal-close,
+      .modal-hint,
+      .modal-actions,
+      .emergency-alert {
+        display: none !important;
+      }
+
+      .modal-backdrop {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: #fff !important;
+        backdrop-filter: none !important;
+        padding: 0 !important;
+      }
+
+      .mood-modal-card {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+    }
+
+    .advice-preface {
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.65;
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      background: linear-gradient(90deg, rgba(224, 242, 254, 0.6), rgba(250, 245, 255, 0.5));
+      border-radius: 12px;
+      border-left: 4px solid #3b82f6;
+      font-weight: 600;
+    }
+
+    .advice-icon-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .advice-icon-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 14px 14px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    }
+
+    .advice-icon-card--low {
+      border-color: rgba(34, 197, 94, 0.35);
+      background: linear-gradient(135deg, rgba(240, 253, 244, 0.95), rgba(255, 255, 255, 0.98));
+    }
+
+    .advice-icon-card--mid {
+      border-color: rgba(249, 115, 22, 0.4);
+      background: linear-gradient(135deg, rgba(255, 247, 237, 0.95), rgba(255, 255, 255, 0.98));
+    }
+
+    .advice-icon-card--high {
+      border-color: rgba(244, 63, 94, 0.45);
+      background: linear-gradient(135deg, rgba(255, 241, 242, 0.98), rgba(255, 255, 255, 0.98));
+    }
+
+    .advice-icon-card--crisis {
+      border-width: 2px;
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.12);
+    }
+
+    .advice-icon-card__icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #0f172a;
+      background: rgba(241, 245, 249, 0.95);
+    }
+
+    .advice-icon-card--low .advice-icon-card__icon {
+      color: #15803d;
+      background: rgba(220, 252, 231, 0.95);
+    }
+
+    .advice-icon-card--mid .advice-icon-card__icon {
+      color: #c2410c;
+      background: rgba(255, 237, 213, 0.95);
+    }
+
+    .advice-icon-card--high .advice-icon-card__icon {
+      color: #be123c;
+      background: rgba(255, 228, 230, 0.95);
+    }
+
+    .advice-icon-card__icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .advice-icon-card__title {
+      font-size: 13px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .advice-icon-card__text {
+      font-size: 12px;
+      color: #475569;
+      line-height: 1.65;
+      font-weight: 500;
+    }
+
+    .advice-icon-card__text strong {
+      color: #334155;
+    }
+
+    .typed-caret::after {
+      content: "";
+      display: inline-block;
+      width: 1px;
+      height: 1em;
+      margin-left: 2px;
+      background: currentColor;
+      vertical-align: -2px;
+      animation: blinkCaret 0.9s step-end infinite;
+    }
+
+    @keyframes blinkCaret {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .advice-steps {
+      margin: 6px 0 0;
+      padding-left: 18px;
+    }
+
+    .advice-steps li {
+      margin-bottom: 4px;
+    }
+
+    .advice-hotline {
+      font-weight: 700;
+      color: #b91c1c;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .report-quote {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(224, 231, 255, 0.5), rgba(236, 253, 245, 0.55));
+      color: #334155;
+      font-size: 12px;
+      line-height: 1.6;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      font-style: italic;
+    }
+
+    .btn-book-consult {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #fff;
+      background: linear-gradient(135deg, #059669 0%, #0d9488 50%, #0891b2 100%);
+      box-shadow: 0 10px 26px rgba(5, 150, 105, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-book-consult:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(5, 150, 105, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .modal-dialog {
+      width: min(480px, 100%);
+      max-height: min(88vh, 640px);
+      overflow: auto;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 22px;
+      box-shadow: 0 24px 56px rgba(47, 58, 74, 0.18);
+      padding: 26px 24px 22px;
+      transform: translateY(12px) scale(0.98);
+      transition: transform 0.28s ease;
+    }
+
+    .modal-backdrop.is-open .modal-dialog {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #23466f;
+      letter-spacing: 0.5px;
+    }
+
+    .modal-sub {
+      font-size: 13px;
+      color: #5a6b7d;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .modal-close {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(58, 110, 165, 0.1);
+      color: #3a6ea5;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .modal-close:hover {
+      background: rgba(58, 110, 165, 0.18);
+    }
+
+    .modal-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #314760;
+      margin-bottom: 8px;
+    }
+
+    .modal-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(58, 110, 165, 0.2);
+      background: rgba(255, 255, 255, 0.85);
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text);
+      resize: vertical;
+    }
+
+    .modal-textarea:focus {
+      outline: none;
+      border-color: rgba(58, 110, 165, 0.45);
+      box-shadow: 0 0 0 3px rgba(58, 110, 165, 0.12);
+    }
+
+    .modal-hint {
+      font-size: 12px;
+      color: #7a8796;
+      margin-top: 8px;
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 18px;
+    }
+
+    .btn-secondary {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(58, 110, 165, 0.25);
+      background: transparent;
+      color: #405168;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(58, 110, 165, 0.08);
+    }
+
+    .btn-primary {
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(90deg, var(--primary), #4c8fd6);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 6px 16px rgba(58, 110, 165, 0.25);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(90deg, var(--primary-hover), #6c63ff);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .modal-panel {
+      display: none;
+    }
+
+    .modal-panel.is-active {
+      display: block;
+    }
+
+    .analyzing-wrap {
+      text-align: center;
+      padding: 12px 0 8px;
+    }
+
+    .analyzing-spinner {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 16px;
+      border: 3px solid rgba(58, 110, 165, 0.15);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.85s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .analyzing-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #23466f;
+      margin-bottom: 8px;
+    }
+
+    .analyzing-step {
+      font-size: 13px;
+      color: #5a6b7d;
+      min-height: 1.5em;
+    }
+
+    .report-box {
+      background: linear-gradient(180deg, rgba(237, 245, 255, 0.65), rgba(255, 255, 255, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 16px;
+      padding: 16px 16px 14px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #314760;
+    }
+
+    .report-box h3 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #2a4f79;
+      margin: 14px 0 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .report-box h3:first-child {
+      margin-top: 0;
+    }
+
+    .report-disclaimer {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(58, 110, 165, 0.2);
+      font-size: 12px;
+      color: #7a8796;
+      line-height: 1.55;
+    }
+
+    .form-error {
+      font-size: 13px;
+      color: #c45c5c;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .form-error.is-visible {
+      display: block;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .analyzing-spinner {
+        animation: none;
+        border-top-color: transparent;
+        border-color: rgba(58, 110, 165, 0.35);
+      }
+    }
+
+    .toolbox-section {
+      margin: 48px auto 56px;
+      max-width: 1000px;
+    }
+
+    .toolbox-head {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .toolbox-kicker {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(58, 110, 165, 0.75);
+      margin-bottom: 8px;
+    }
+
+    .toolbox-title {
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 900;
+      color: #23466f;
+      letter-spacing: 2px;
+    }
+
+    .toolbox-desc {
+      font-size: 14px;
+      color: #5a6b7d;
+      margin-top: 10px;
+      line-height: 1.55;
+    }
+
+    .toolbox-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .toolbox-card {
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      border-radius: 22px;
+      padding: 24px 20px 22px;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      color: inherit;
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 14px 36px rgba(47, 58, 74, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .toolbox-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 44px rgba(47, 58, 74, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .toolbox-card:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(58, 110, 165, 0.28), 0 20px 44px rgba(47, 58, 74, 0.12);
+    }
+
+    .toolbox-card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+    }
+
+    .toolbox-card-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .toolbox-card--report .toolbox-card-icon {
+      background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+      color: #3b5bdb;
+    }
+
+    .toolbox-card--crisis .toolbox-card-icon {
+      background: linear-gradient(135deg, #ffe4e6, #fecdd3);
+      color: #e11d48;
+    }
+
+    .toolbox-card--lesson .toolbox-card-icon {
+      background: linear-gradient(135deg, #f3e8ff, #fce7f3);
+      color: #9333ea;
+    }
+
+    .toolbox-card h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #23466f;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .toolbox-card p {
+      font-size: 13px;
+      color: #5a6b7d;
+      line-height: 1.55;
+    }
+
+    .toolbox-card-tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: rgba(58, 110, 165, 0.85);
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(58, 110, 165, 0.12);
+    }
+
+    .modal-dialog.modal-wide {
+      width: min(560px, 100%);
+    }
+
+    .crisis-table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(58, 110, 165, 0.12);
+    }
+
+    .crisis-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .crisis-table th,
+    .crisis-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(58, 110, 165, 0.08);
+    }
+
+    .crisis-table th {
+      background: rgba(237, 245, 255, 0.85);
+      font-weight: 800;
+      color: #2a4f79;
+    }
+
+    .crisis-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .risk-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .risk-badge--high {
+      background: rgba(225, 29, 72, 0.12);
+      color: #be123c;
+    }
+
+    .risk-badge--mid {
+      background: rgba(234, 179, 8, 0.18);
+      color: #a16207;
+    }
+
+    .risk-badge--watch {
+      background: rgba(58, 110, 165, 0.12);
+      color: #1d4ed8;
+    }
+
+    .lesson-select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(58, 110, 165, 0.2);
+      background: rgba(255, 255, 255, 0.9);
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .lesson-output {
+      display: none;
+      margin-top: 14px;
+    }
+
+    .lesson-output.is-visible {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .toolbox-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding-bottom: 22px;
+      }
+
+      .container {
+        width: min(1120px, 95%);
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+      }
+
+      .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 10px 16px;
+      }
+
+      .nav-links a {
+        display: inline-block;
+        padding: 4px 2px;
+      }
+
+      .hero {
+        margin-top: 36px;
+        padding: 36px 16px 28px;
+        border-radius: 22px;
+      }
+
+      .slogan {
+        letter-spacing: 1.5px;
+        margin-bottom: 20px;
+      }
+
+      .cta-button {
+        width: 100%;
+        max-width: 420px;
+        padding: 16px 20px;
+        font-size: 17px;
+        border-radius: 14px;
+      }
+
+      .process {
+        margin-top: 30px;
+        padding: 18px 14px;
+      }
+
+      .toolbox-section {
+        margin-top: 28px;
+      }
+
+      .toolbox-card {
+        padding: 18px 14px 16px;
+      }
+
+      .mood-modal-shell {
+        max-width: 100%;
+        padding: 12px 12px 16px;
+      }
+
+      .mood-modal-card {
+        padding: 18px 14px;
+        border-radius: 18px;
+      }
+
+      .mood-textarea--large {
+        min-height: 190px;
+        font-size: 16px;
+      }
+
+      .modal-actions {
+        justify-content: stretch;
+      }
+
+      .btn-secondary,
+      .btn-primary {
+        width: 100%;
+        min-height: 44px;
+      }
+
+      .report-actions .btn-download-report,
+      .report-actions .btn-secondary {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 18px;
+      }
+
+      .slogan {
+        font-size: clamp(24px, 8vw, 32px);
+      }
+
+      .toolbox-title {
+        letter-spacing: 1px;
+      }
+
+      .toolbox-card h3 {
+        font-size: 16px;
+      }
+
+      .toolbox-card p {
+        font-size: 12.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-shape" style="width: 160px; height: 160px; top: 72px; right: 18%;"></div>
+  <div class="bg-shape" style="width: 120px; height: 120px; top: 62%; left: 10%;"></div>
+  <div class="bg-shape" style="width: 220px; height: 220px; top: 38%; right: -40px;"></div>
+  <div class="container">
+    <nav class="navbar" id="booking">
+      <div class="logo"><span class="logo-dot" aria-hidden="true"></span><span>微光</span></div>
+      <ul class="nav-links">
+        <li><a href="#">首页</a></li>
+        <li><a href="#booking">预约管理</a></li>
+        <li><a href="#">学生档案</a></li>
+        <li><a href="/admin.html">微光老师台</a></li>
+      </ul>
+    </nav>
+
+    <main class="hero">
+      <h1 class="slogan">让每个孩子都被看见</h1>
+      <button type="button" class="cta-button" id="openMoodModal" aria-haspopup="dialog">
+        立即发起心理测评
+      </button>
+      <section class="process">
+        <h2 class="process-title">服务流程</h2>
+        <ul class="process-grid" id="processFlowGrid">
+          <li class="process-item">
+            <span class="icon-circle">1</span>
+            <span>在线测评</span>
+          </li>
+          <li class="process-item">
+            <span class="icon-circle">2</span>
+            <span>专家匹配</span>
+          </li>
+          <li class="process-item">
+            <span class="icon-circle">3</span>
+            <span>开启咨询</span>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <section class="toolbox-section" aria-labelledby="toolboxTitle">
+      <div class="toolbox-head">
+        <p class="toolbox-kicker">FOR COUNSELORS</p>
+        <h2 class="toolbox-title" id="toolboxTitle">微光 AI 老师工具箱</h2>
+        <p class="toolbox-desc">常用工具集中入口，助力个案记录、风险关注与课堂设计。（以下为演示功能）</p>
+      </div>
+      <div class="toolbox-grid">
+        <button type="button" class="toolbox-card toolbox-card--report" id="openToolboxReport" aria-haspopup="dialog">
+          <div class="toolbox-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+          </div>
+          <h3>微光 AI 报告撰写</h3>
+          <p>根据观察要点辅助起草学生个案报告框架，节省文书时间。</p>
+          <span class="toolbox-card-tag">个案文书</span>
+        </button>
+        <button type="button" class="toolbox-card toolbox-card--crisis" id="openToolboxCrisis" aria-haspopup="dialog">
+          <div class="toolbox-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <h3>危机自动预警</h3>
+          <p>综合测评与行为信号，列出需优先关注的学生名单（模拟数据）。</p>
+          <span class="toolbox-card-tag">风险筛查</span>
+        </button>
+        <button type="button" class="toolbox-card toolbox-card--lesson" id="openToolboxLesson" aria-haspopup="dialog">
+          <div class="toolbox-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+              <line x1="12" y1="6" x2="12" y2="12" />
+              <line x1="9" y1="9" x2="15" y2="9" />
+            </svg>
+          </div>
+          <h3>心理教案库</h3>
+          <p>按主题一键生成心理课课件大纲，可再按需微调后用于课堂。</p>
+          <span class="toolbox-card-tag">课堂设计</span>
+        </button>
+        <button type="button" class="toolbox-card toolbox-card--lesson" id="openToolboxPlanGen" aria-haspopup="dialog">
+          <div class="toolbox-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16v16H4z" />
+              <path d="M8 8h8M8 12h8M8 16h5" />
+            </svg>
+          </div>
+          <h3>微光教案生成器</h3>
+          <p>输入主题后由微光 AI 生成含“微光出品”水印的教案草案。</p>
+          <span class="toolbox-card-tag">教研提效</span>
+        </button>
+        <button type="button" class="toolbox-card toolbox-card--report" id="openToolboxTips" aria-haspopup="dialog">
+          <div class="toolbox-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18h6" />
+              <path d="M10 22h4" />
+              <path d="M12 2a7 7 0 0 0-4 12.75V17h8v-2.25A7 7 0 0 0 12 2z" />
+            </svg>
+          </div>
+          <h3>微光心理锦囊</h3>
+          <p>随机弹出微光 AI 生成的老师减压金句，快速回正心态。</p>
+          <span class="toolbox-card-tag">减压支持</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div
+    class="modal-backdrop modal-backdrop--fullscreen"
+    id="moodModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="moodModalTitle"
+    hidden
+  >
+    <div class="mood-modal-shell">
+      <div class="mood-modal-card">
+        <div class="modal-header">
+          <div>
+            <h2 class="modal-title" id="moodModalTitle">心理测评</h2>
+            <p class="modal-sub">以下为演示交互，结果由本地规则生成，不能替代专业评估。</p>
+          </div>
+          <button type="button" class="modal-close" id="closeMoodModal" aria-label="关闭">×</button>
+        </div>
+
+        <div class="modal-panel is-active" id="panelInput">
+          <label class="modal-label" for="moodText">说说你的感受</label>
+          <textarea
+            id="moodText"
+            class="modal-textarea mood-textarea--large"
+            placeholder="请描述你最近的心情或困扰，微光 AI 会试着理解你..."
+            maxlength="800"
+          ></textarea>
+          <p class="modal-hint">内容仅在本页演示使用，不会上传到服务器。</p>
+          <p class="form-error" id="moodError" role="alert">请先输入一段描述，再提交。</p>
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="cancelMoodModal">取消</button>
+            <button type="button" class="btn-primary" id="submitMood">提交分析</button>
+          </div>
+        </div>
+
+        <div class="modal-panel" id="panelAnalyzing">
+          <div class="analyzing-wrap" style="padding: 32px 8px 24px">
+            <div class="analyzing-spinner" aria-hidden="true"></div>
+            <p class="analyzing-title" style="margin-bottom: 12px">分析中</p>
+            <p class="analyzing-step" id="analyzingStep" aria-live="polite">微光 AI 正在理解语义…</p>
+          </div>
+        </div>
+
+        <div class="modal-panel" id="panelReport">
+          <div class="screening-report" id="reportContent"></div>
+          <div class="modal-actions report-actions" style="margin-top: 18px">
+            <button type="button" class="btn-download-report" id="downloadReportBtn" aria-label="下载报告（演示）">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="7 10 12 15 17 10" />
+                <line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+              下载报告
+            </button>
+            <button type="button" class="btn-secondary" id="closeReport">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="toolboxReportModal" role="dialog" aria-modal="true" aria-labelledby="toolboxReportTitle" hidden>
+    <div class="modal-dialog modal-wide">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="toolboxReportTitle">微光 AI 报告撰写</h2>
+          <p class="modal-sub">填写化名与观察要点，生成个案报告草稿框架，请结合实际面谈修改并遵守保密规范。</p>
+        </div>
+        <button type="button" class="modal-close" id="closeToolboxReport" aria-label="关闭">×</button>
+      </div>
+      <label class="modal-label" for="caseAlias">学生化名 / 代号</label>
+      <input type="text" id="caseAlias" class="modal-textarea" style="min-height: auto; height: 46px" placeholder="例如：小 A（高一）" maxlength="40" />
+      <label class="modal-label" for="caseNotes" style="margin-top: 14px">观察与会谈要点</label>
+      <textarea id="caseNotes" class="modal-textarea" placeholder="例如：近两周情绪低落，作业拖延，提及与室友相处困难……" maxlength="2000"></textarea>
+      <p class="form-error" id="caseNotesError" role="alert">请先填写观察与会谈要点。</p>
+      <div class="modal-actions" style="margin-top: 14px">
+        <button type="button" class="btn-secondary" id="cancelToolboxReport">取消</button>
+        <button type="button" class="btn-primary" id="generateCaseDraft">生成报告草稿</button>
+      </div>
+      <div class="report-box" id="caseDraftOutput" style="display: none; margin-top: 16px"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="toolboxCrisisModal" role="dialog" aria-modal="true" aria-labelledby="toolboxCrisisTitle" hidden>
+    <div class="modal-dialog modal-wide">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="toolboxCrisisTitle">危机自动预警</h2>
+          <p class="modal-sub">以下为演示用模拟名单，不代表真实学生。实际使用需结合面谈与校内外流程。</p>
+        </div>
+        <button type="button" class="modal-close" id="closeToolboxCrisis" aria-label="关闭">×</button>
+      </div>
+      <div class="crisis-table-wrap">
+        <table class="crisis-table">
+          <thead>
+            <tr>
+              <th>化名</th>
+              <th>风险等级</th>
+              <th>主要信号</th>
+              <th>更新</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>小 L</td>
+              <td><span class="risk-badge risk-badge--high">高关注</span></td>
+              <td>测评中自伤意念条目阳性；近一周未到咨询预约</td>
+              <td>今日</td>
+            </tr>
+            <tr>
+              <td>小 K</td>
+              <td><span class="risk-badge risk-badge--mid">中关注</span></td>
+              <td>睡眠量表得分偏高；班主任反馈上课走神增多</td>
+              <td>昨日</td>
+            </tr>
+            <tr>
+              <td>小 M</td>
+              <td><span class="risk-badge risk-badge--watch">观察</span></td>
+              <td>人际冲突量表边缘；无即时危机表述</td>
+              <td>3 日前</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="modal-hint" style="margin-top: 14px">提示：高风险个案请按学校危机干预预案执行，并做好记录与转介。</p>
+      <div class="modal-actions">
+        <button type="button" class="btn-primary" id="closeToolboxCrisisBtn">我知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="toolboxLessonModal" role="dialog" aria-modal="true" aria-labelledby="toolboxLessonTitle" hidden>
+    <div class="modal-dialog modal-wide">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="toolboxLessonTitle">心理教案库</h2>
+          <p class="modal-sub">选择主题后一键生成课件大纲（演示）。正式上课前请根据班级学情调整。</p>
+        </div>
+        <button type="button" class="modal-close" id="closeToolboxLesson" aria-label="关闭">×</button>
+      </div>
+      <label class="modal-label" for="lessonTopic">课程主题</label>
+      <select id="lessonTopic" class="lesson-select">
+        <option value="emotion">情绪识别与调节（初一～初二）</option>
+        <option value="stress">考试压力与自我关怀（初三～高一）</option>
+        <option value="social">同伴沟通与边界感（高一～高二）</option>
+      </select>
+      <button type="button" class="btn-primary" id="generateLesson" style="width: 100%">一键生成心理课课件大纲</button>
+      <div class="lesson-output report-box" id="lessonOutput" aria-live="polite"></div>
+      <div class="modal-actions" style="margin-top: 16px">
+        <button type="button" class="btn-secondary" id="cancelToolboxLesson">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="toolboxPlanGenModal" role="dialog" aria-modal="true" aria-labelledby="toolboxPlanGenTitle" hidden>
+    <div class="modal-dialog modal-wide">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="toolboxPlanGenTitle">微光教案生成器</h2>
+          <p class="modal-sub">输入课堂主题，生成“微光出品”版教案草案（演示）。</p>
+        </div>
+        <button type="button" class="modal-close" id="closeToolboxPlanGen" aria-label="关闭">×</button>
+      </div>
+      <label class="modal-label" for="planTopicInput">教案主题</label>
+      <input id="planTopicInput" class="lesson-select" type="text" placeholder="例如：考试焦虑调节与同伴支持" />
+      <label class="modal-label" for="planStageSelect">适用学段</label>
+      <select id="planStageSelect" class="lesson-select">
+        <option value="primary">小学</option>
+        <option value="middle">初中</option>
+        <option value="high">高中</option>
+      </select>
+      <button type="button" class="btn-primary" id="generatePlanDraft" style="width: 100%">生成微光教案</button>
+      <div class="lesson-output report-box" id="planDraftOutput"></div>
+      <div class="modal-actions" style="margin-top: 16px">
+        <button type="button" class="btn-secondary" id="cancelToolboxPlanGen">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="toolboxTipsModal" role="dialog" aria-modal="true" aria-labelledby="toolboxTipsTitle" hidden>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="toolboxTipsTitle">微光心理锦囊</h2>
+          <p class="modal-sub">给老师的一句微光 AI 金句。</p>
+        </div>
+        <button type="button" class="modal-close" id="closeToolboxTips" aria-label="关闭">×</button>
+      </div>
+      <div class="report-box" id="tipsQuoteBox"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="refreshTipsQuote">换一句</button>
+        <button type="button" class="btn-primary" id="cancelToolboxTips">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var backdrop = document.getElementById("moodModal");
+      var openBtn = document.getElementById("openMoodModal");
+      var closeBtn = document.getElementById("closeMoodModal");
+      var cancelBtn = document.getElementById("cancelMoodModal");
+      var submitBtn = document.getElementById("submitMood");
+      var textarea = document.getElementById("moodText");
+      var moodError = document.getElementById("moodError");
+      var panelInput = document.getElementById("panelInput");
+      var panelAnalyzing = document.getElementById("panelAnalyzing");
+      var panelReport = document.getElementById("panelReport");
+      var analyzingStep = document.getElementById("analyzingStep");
+      var reportContent = document.getElementById("reportContent");
+      var closeReportBtn = document.getElementById("closeReport");
+      var downloadReportBtn = document.getElementById("downloadReportBtn");
+      const API_KEY = ""; // 安全占位：真实 Key 仅放在后端，不在前端使用
+      const RECORDS_STORAGE_KEY = "mindplatform_ai_records";
+
+      var lastFocus = null;
+      var typingRunId = 0;
+      var latestAiResult = null;
+      var latestUserText = "";
+
+      function showPanel(which) {
+        panelInput.classList.toggle("is-active", which === "input");
+        panelAnalyzing.classList.toggle("is-active", which === "analyzing");
+        panelReport.classList.toggle("is-active", which === "report");
+      }
+
+      function openModal() {
+        lastFocus = document.activeElement;
+        document.querySelectorAll(".modal-backdrop").forEach(function (m) {
+          m.classList.remove("is-open");
+          m.hidden = true;
+        });
+        backdrop.hidden = false;
+        backdrop.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        showPanel("input");
+        moodError.classList.remove("is-visible");
+        textarea.value = "";
+        var reportBox = document.getElementById("reportContent");
+        if (reportBox) reportBox.innerHTML = "";
+        setTimeout(function () {
+          textarea.focus();
+        }, 50);
+      }
+
+      function closeModal() {
+        typingRunId += 1;
+        backdrop.classList.remove("is-open");
+        backdrop.hidden = true;
+        document.body.style.overflow = "";
+        if (lastFocus && typeof lastFocus.focus === "function") {
+          lastFocus.focus();
+        }
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function clamp(n, lo, hi) {
+        return Math.max(lo, Math.min(hi, n));
+      }
+
+      function pad2(n) {
+        return n < 10 ? "0" + n : String(n);
+      }
+
+      function barToneClass(value) {
+        if (value <= 40) return "progress-fill--bar-low";
+        if (value <= 69) return "progress-fill--bar-mid";
+        return "progress-fill--bar-high";
+      }
+
+      var SVG_ADVICE = {
+        breath:
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>',
+        park:
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-6"/><path d="M8 22h8"/><path d="M12 16c-3-4-6-7-6-10a6 6 0 0 1 12 0c0 3-3 6-6 10z"/></svg>',
+        users:
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+        chat:
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+        anchor:
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+        hospital:
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/><path d="M7 21h10"/></svg>',
+        phone:
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+      };
+
+      var MASTER_QUOTES = [
+        "“不是发生在你身上的事情决定你是谁，而是你选择如何回应。” —— 荣格",
+        "“勇气并不是没有恐惧，而是带着恐惧仍然向前。” —— 阿德勒",
+        "“人可以被夺走一切，但仍保有选择态度的自由。” —— 弗兰克尔",
+        "“当一个人被真正理解时，改变便开始发生。” —— 卡尔·罗杰斯",
+      ];
+
+      function parseRiskTone(riskText) {
+        var v = String(riskText || "").toLowerCase();
+        if (v.indexOf("高") >= 0 || v.indexOf("high") >= 0 || v.indexOf("red") >= 0) return "high";
+        if (v.indexOf("中") >= 0 || v.indexOf("mid") >= 0 || v.indexOf("orange") >= 0) return "mid";
+        return "low";
+      }
+
+      function riskLabelAndClass(tone) {
+        if (tone === "high") return { label: "高风险", cls: "risk-pill--high" };
+        if (tone === "mid") return { label: "中风险", cls: "risk-pill--mid" };
+        return { label: "低风险", cls: "risk-pill--low" };
+      }
+
+      function saveAnalysisRecord(userText, aiResult) {
+        try {
+          var now = new Date();
+          var record = {
+            time: now.toISOString(),
+            userInput: String(userText || ""),
+            riskLevel: String(aiResult && aiResult.riskLabel ? aiResult.riskLabel : "低风险"),
+            suggestionKeywords: Array.isArray(aiResult && aiResult.actions)
+              ? aiResult.actions.slice(0, 3).join("、")
+              : "",
+            emotionRecognition: String((aiResult && aiResult.emotionRecognition) || ""),
+            deepEmpathy: String((aiResult && aiResult.deepEmpathy) || ""),
+            professionalAnalysis: String((aiResult && aiResult.professionalAnalysis) || ""),
+            actions: Array.isArray(aiResult && aiResult.actions) ? aiResult.actions.slice(0, 5) : [],
+            anxietyScore: Number(aiResult && aiResult.anxietyScore ? aiResult.anxietyScore : 0),
+            fatigueScore: Number(aiResult && aiResult.fatigueScore ? aiResult.fatigueScore : 0),
+            resilienceScore: Number(aiResult && aiResult.resilienceScore ? aiResult.resilienceScore : 0),
+          };
+          var records = [];
+          var raw = localStorage.getItem(RECORDS_STORAGE_KEY);
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) records = parsed;
+          }
+          records.unshift(record);
+          if (records.length > 500) records = records.slice(0, 500);
+          localStorage.setItem(RECORDS_STORAGE_KEY, JSON.stringify(records));
+        } catch (err) {
+          // 本地存储失败不影响主流程
+        }
+      }
+
+      function weatherByRisk(tone) {
+        if (tone === "high") return "有雨";
+        if (tone === "mid") return "微云";
+        return "晴朗";
+      }
+
+      function buildStudentPrintHtml(aiResult, userText) {
+        var p = function (n) {
+          return n < 10 ? "0" + n : String(n);
+        };
+        var now = new Date();
+        var timeText =
+          now.getFullYear() +
+          "-" +
+          p(now.getMonth() + 1) +
+          "-" +
+          p(now.getDate()) +
+          " " +
+          p(now.getHours()) +
+          ":" +
+          p(now.getMinutes());
+        var tips = (aiResult.actions || []).slice(0, 3);
+        if (!tips.length) tips = ["给自己安排一段安静的休息时间。"];
+        return (
+          "<!DOCTYPE html><html lang='zh-CN'><head><meta charset='UTF-8'/>" +
+          "<title>微光 - 守护每个孩子的心理健康</title>" +
+          "<style>" +
+          "@page{size:A4;margin:20mm;} body{font-family:Microsoft YaHei,Arial,sans-serif;background:#fff;color:#1f2f45;}" +
+          ".sheet{max-width:760px;margin:0 auto;} .toolbar{display:flex;justify-content:flex-end;gap:10px;margin-bottom:14px;}" +
+          ".btn{border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:700;} .print{background:#2f6fa5;color:#fff;} .close{background:#e2e8f0;color:#334155;}" +
+          "h1{font-size:26px;color:#1f4f7e;margin:0 0 6px;} .meta{font-size:12px;color:#64748b;margin-bottom:14px;}" +
+          ".weather{display:inline-block;padding:6px 12px;border-radius:999px;background:#e0f2fe;color:#0369a1;font-weight:700;font-size:13px;margin-bottom:14px;}" +
+          ".sec{margin-bottom:14px;} .sec h2{font-size:16px;margin-bottom:8px;color:#1f4f7e;border-left:4px solid #60a5fa;padding-left:8px;}" +
+          ".box{background:#f8fbff;border:1px solid #dbeafe;border-radius:10px;padding:11px 12px;line-height:1.75;font-size:14px;}" +
+          "ol{margin-left:20px;line-height:1.8;} .footer{margin-top:20px;text-align:center;font-size:14px;color:#475569;font-weight:700;}" +
+          "@media print {.toolbar{display:none}}" +
+          "</style></head><body><div class='sheet'>" +
+          "<div class='toolbar'><button class='btn close' onclick='window.close()'>关闭</button><button class='btn print' onclick='window.print()'>下载/打印此报告</button></div>" +
+          "<h1>《微光校园 · 个人心理晴雨表》</h1><div style='font-size:12px;color:#64748b;margin-bottom:8px;'>微光 · 守护每一个被看见的灵魂</div>" +
+          "<div class='meta'>生成时间：" +
+          escapeHtml(timeText) +
+          "</div>" +
+          "<div class='weather'>心理天气：" +
+          escapeHtml(weatherByRisk(aiResult.riskTone)) +
+          "</div>" +
+          "<section class='sec'><h2>你的心情记录</h2><div class='box'>" +
+          escapeHtml(userText || "—") +
+          "</div></section>" +
+          "<section class='sec'><h2>AI 给你的暖心话</h2><div class='box'>" +
+          escapeHtml(aiResult.deepEmpathy || aiResult.emotionRecognition || "感谢你的分享。") +
+          "</div></section>" +
+          "<section class='sec'><h2>行动小贴士</h2><div class='box'><ol>" +
+          tips
+            .map(function (x) {
+              return "<li>" + escapeHtml(x) + "</li>";
+            })
+            .join("") +
+          "</ol></div></section>" +
+          "<div class='footer'>无论风雨，我们一直都在。</div>" +
+          "</div></body></html>"
+        );
+      }
+
+      function openStudentPrintPreview(aiResult, userText) {
+        var popup = window.open("", "_blank", "width=940,height=760");
+        if (!popup) {
+          alert("浏览器拦截了弹窗，请允许弹窗后重试。");
+          return;
+        }
+        popup.document.open();
+        popup.document.write(buildStudentPrintHtml(aiResult, userText));
+        popup.document.close();
+      }
+
+      function pickRandom(items, count) {
+        var arr = Array.isArray(items) ? items.slice() : [];
+        for (var i = arr.length - 1; i > 0; i -= 1) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = tmp;
+        }
+        return arr.slice(0, Math.max(0, Math.min(count || 0, arr.length)));
+      }
+
+      function normalizeAiPayload(payload) {
+        var metrics = payload && payload.metrics ? payload.metrics : {};
+        var tone = parseRiskTone(metrics.risk_level || payload.risk_warning_level || "");
+        var riskMeta = riskLabelAndClass(tone);
+        var actions = Array.isArray(payload.actions) ? payload.actions : [];
+        return {
+          emotionRecognition: payload.emotion_recognition || payload.emotionRecognition || "未返回情绪识别内容。",
+          deepEmpathy: payload.deep_empathy || payload.deepEmpathy || "未返回深度共情内容。",
+          professionalAnalysis:
+            payload.professional_analysis || payload.professionalAnalysis || "未返回专业心理学分析内容。",
+          actions: actions.slice(0, 3).map(function (x) {
+            return String(x || "");
+          }),
+          anxietyScore: clamp(Number(metrics.anxiety_score || metrics.anxiety || 45), 1, 100),
+          fatigueScore: clamp(Number(metrics.fatigue_score || metrics.fatigue || 45), 1, 100),
+          resilienceScore: clamp(Number(metrics.resilience_score || metrics.resilience || 55), 1, 100),
+          riskTone: tone,
+          riskLabel: riskMeta.label,
+          riskPillClass: riskMeta.cls,
+          quote: payload.quote || MASTER_QUOTES[Math.floor(Math.random() * MASTER_QUOTES.length)],
+        };
+      }
+
+      function extractJson(text) {
+        var raw = String(text || "").trim();
+        if (!raw) return null;
+        var cleaned = raw.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/\s*```$/i, "");
+        try {
+          return JSON.parse(cleaned);
+        } catch (e) {
+          var m = cleaned.match(/\{[\s\S]*\}/);
+          if (!m) return null;
+          try {
+            return JSON.parse(m[0]);
+          } catch (e2) {
+            return null;
+          }
+        }
+      }
+
+      function formatInlineMarkdown(text) {
+        return String(text || "")
+          .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+          .replace(/`([^`]+)`/g, "<code>$1</code>");
+      }
+
+      function renderMarkdown(text) {
+        var safe = escapeHtml(String(text || "")).replace(/\r\n/g, "\n");
+        var lines = safe.split("\n");
+        var html = "";
+        var listType = null;
+
+        function closeList() {
+          if (listType) {
+            html += "</" + listType + ">";
+            listType = null;
+          }
+        }
+
+        lines.forEach(function (line) {
+          var trimmed = line.trim();
+          if (!trimmed) {
+            closeList();
+            return;
+          }
+
+          var heading = trimmed.match(/^(#{1,4})\s+(.+)$/);
+          if (heading) {
+            closeList();
+            var level = heading[1].length;
+            html += "<h" + level + ">" + formatInlineMarkdown(heading[2]) + "</h" + level + ">";
+            return;
+          }
+
+          var quote = trimmed.match(/^>\s?(.+)$/);
+          if (quote) {
+            closeList();
+            html += "<blockquote><p>" + formatInlineMarkdown(quote[1]) + "</p></blockquote>";
+            return;
+          }
+
+          var ordered = trimmed.match(/^\d+\.\s+(.+)$/);
+          if (ordered) {
+            if (listType !== "ol") {
+              closeList();
+              listType = "ol";
+              html += "<ol>";
+            }
+            html += "<li>" + formatInlineMarkdown(ordered[1]) + "</li>";
+            return;
+          }
+
+          var unordered = trimmed.match(/^[-*]\s+(.+)$/);
+          if (unordered) {
+            if (listType !== "ul") {
+              closeList();
+              listType = "ul";
+              html += "<ul>";
+            }
+            html += "<li>" + formatInlineMarkdown(unordered[1]) + "</li>";
+            return;
+          }
+
+          closeList();
+          html += "<p>" + formatInlineMarkdown(trimmed) + "</p>";
+        });
+
+        closeList();
+        return html || "<p>暂无内容</p>";
+      }
+
+      async function callAI(userText) {
+        var endpoint = "/api/ai-analysis";
+        var systemPrompt =
+          [
+            "你是微光 AI，中国校园心理健康专家。",
+            "请基于用户输入生成结构化分析，必须包含：情绪识别、深度共情、专业心理学分析、3条具体行动方案。",
+            "输出必须是严格 JSON，不要输出 markdown 代码块。",
+            "JSON schema:",
+            "{",
+            '  "emotion_recognition": "string",',
+            '  "deep_empathy": "string",',
+            '  "professional_analysis": "string",',
+            '  "actions": ["string","string","string"],',
+            '  "metrics": {',
+            '    "anxiety_score": 0-100 number,',
+            '    "fatigue_score": 0-100 number,',
+            '    "resilience_score": 0-100 number,',
+            '    "risk_level": "低风险|中风险|高风险"',
+            "  },",
+            '  "quote": "一句心理学相关名言"',
+            "}",
+          ].join("\n");
+
+        var res = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userText: userText,
+            systemPrompt: systemPrompt,
+          }),
+        });
+
+        var data = await res.json().catch(function () {
+          return {};
+        });
+        if (!res.ok) {
+          var detailMsg =
+            data &&
+            data.details &&
+            data.details.error &&
+            data.details.error.message
+              ? data.details.error.message
+              : data && data.message
+              ? data.message
+              : "";
+          throw new Error("api_error:" + res.status + ":" + detailMsg);
+        }
+        var content =
+          data &&
+          data.choices &&
+          data.choices[0] &&
+          data.choices[0].message &&
+          data.choices[0].message.content
+            ? data.choices[0].message.content
+            : "";
+        var payload = extractJson(content);
+        if (!payload) {
+          throw new Error("invalid_ai_payload");
+        }
+        return normalizeAiPayload(payload);
+      }
+
+      function adviceIconCard(tone, iconSvg, title, bodyHtml, extraClass) {
+        var cls = "advice-icon-card advice-icon-card--" + tone + (extraClass ? " " + extraClass : "");
+        return (
+          '<div class="' +
+          cls +
+          '">' +
+          '<div class="advice-icon-card__icon">' +
+          iconSvg +
+          '</div><div class="advice-icon-card__body">' +
+          '<div class="advice-icon-card__title">' +
+          escapeHtml(title) +
+          "</div>" +
+          '<div class="advice-icon-card__text">' +
+          bodyHtml +
+          "</div></div></div>"
+        );
+      }
+
+      function iconForAction(text) {
+        var t = String(text || "");
+        if (/呼吸|放松|正念/.test(t)) return SVG_ADVICE.breath;
+        if (/公园|散步|户外|运动/.test(t)) return SVG_ADVICE.park;
+        if (/同伴|朋友|家长|老师|支持/.test(t)) return SVG_ADVICE.users;
+        if (/预约|谈话|咨询|沟通/.test(t)) return SVG_ADVICE.chat;
+        if (/危机|热线|紧急|医院|医疗/.test(t)) return SVG_ADVICE.phone;
+        return SVG_ADVICE.anchor;
+      }
+
+      function buildActionAdviceHtml(aiResult) {
+        var tone = aiResult.riskTone;
+        var actions = aiResult.actions.length ? aiResult.actions : ["建议尽快与心理老师进行一次面对面沟通。"];
+        var cards = actions
+          .map(function (item, idx) {
+            return adviceIconCard(
+              tone,
+              iconForAction(item),
+              "行动方案 " + (idx + 1),
+              '<span class="js-typed">' + escapeHtml(item) + "</span>",
+              tone === "high" && idx === 0 ? "advice-icon-card--crisis" : ""
+            );
+          })
+          .join("");
+        if (tone === "high") {
+          cards += adviceIconCard(
+            "high",
+            SVG_ADVICE.hospital,
+            "24 小时心理危机干预热线（示例）",
+            '<span class="js-typed">请优先保存并联系本地危机热线：<span class="advice-hotline">400-161-9995</span>、<span class="advice-hotline">12320</span>。若风险加重，请立即就医。</span>'
+          );
+        }
+        return (
+          '<div class="screening-section screening-section--advice">' +
+          "<h4>【专业行动建议】</h4>" +
+          '<p class="advice-preface js-typed">根据《中小学生心理健康指导手册》及 微光 AI 语义模型，为您推荐以下方案：</p>' +
+          '<div class="advice-icon-grid">' +
+          cards +
+          "</div>" +
+          '<button type="button" class="btn-book-consult js-book-consult">预约专业咨询师</button>' +
+          "</div>"
+        );
+      }
+
+      function buildScreeningReportHtml(aiResult, userText) {
+        var excerpt = (userText || "").trim();
+        excerpt = excerpt.length > 96 ? excerpt.slice(0, 96) + "…" : excerpt;
+        var now = new Date();
+        var timeStr =
+          now.getFullYear() +
+          "-" +
+          pad2(now.getMonth() + 1) +
+          "-" +
+          pad2(now.getDate()) +
+          " " +
+          pad2(now.getHours()) +
+          ":" +
+          pad2(now.getMinutes());
+
+        return (
+          '<div class="screening-report__head">' +
+          '<div class="screening-report__title">微光 AI 心理健康初筛报告</div>' +
+          '<p class="screening-report__meta">生成时间：' +
+          escapeHtml(timeStr) +
+          " · 摘录长度 " +
+          excerpt.length +
+          " 字</p>" +
+          "</div>" +
+          '<div class="screening-report__risk-row">' +
+          '<span class="risk-label-text">【风险预警级别】</span>' +
+          '<span class="risk-pill ' +
+          aiResult.riskPillClass +
+          '" role="status">' +
+          escapeHtml(aiResult.riskLabel) +
+          "</span>" +
+          "</div>" +
+          '<div class="screening-metrics">' +
+          '<div class="mood-metric"><div class="mood-metric__top"><span>焦虑度</span><span class="mood-metric__val">' +
+          aiResult.anxietyScore +
+          '%</span></div><div class="progress-track"><div class="progress-fill ' +
+          barToneClass(aiResult.anxietyScore) +
+          '" style="width:' +
+          aiResult.anxietyScore +
+          '%"></div></div></div>' +
+          '<div class="mood-metric"><div class="mood-metric__top"><span>疲劳度</span><span class="mood-metric__val">' +
+          aiResult.fatigueScore +
+          '%</span></div><div class="progress-track"><div class="progress-fill ' +
+          barToneClass(aiResult.fatigueScore) +
+          '" style="width:' +
+          aiResult.fatigueScore +
+          '%"></div></div></div>' +
+          '<div class="mood-metric"><div class="mood-metric__top"><span>心理弹性指数（越高越好）</span><span class="mood-metric__val">' +
+          aiResult.resilienceScore +
+          '%</span></div><div class="progress-track"><div class="progress-fill progress-fill--resilience" style="width:' +
+          aiResult.resilienceScore +
+          '%"></div></div></div>' +
+          "</div>" +
+          '<div class="screening-section"><h4>【情绪识别】</h4><p style="font-size:12px;color:#64748b;margin-bottom:10px">用户表述摘录：' +
+          escapeHtml(excerpt) +
+          '</p><div class="markdown-body">' +
+          renderMarkdown(aiResult.emotionRecognition) +
+          "</div></div>" +
+          '<div class="screening-section"><h4>【深度共情】</h4><div class="markdown-body">' +
+          renderMarkdown(aiResult.deepEmpathy) +
+          "</div></div>" +
+          '<div class="screening-section"><h4>【专业心理学分析】</h4><div class="markdown-body">' +
+          renderMarkdown(aiResult.professionalAnalysis) +
+          "</div></div>" +
+          buildActionAdviceHtml(aiResult) +
+          '<div class="report-quote js-typed">' +
+          escapeHtml(aiResult.quote || MASTER_QUOTES[0]) +
+          "</div>" +
+          '<p class="screening-disclaimer">本结果由 微光 AI 生成，仅供参考，不作为医学诊断依据。</p>'
+        );
+      }
+
+      function typeTextNode(el, text, runId, speed) {
+        return new Promise(function (resolve) {
+          var idx = 0;
+          el.textContent = "";
+          el.classList.add("typed-caret");
+          function step() {
+            if (runId !== typingRunId) {
+              el.classList.remove("typed-caret");
+              return resolve();
+            }
+            idx += 1;
+            el.textContent = text.slice(0, idx);
+            if (idx >= text.length) {
+              el.classList.remove("typed-caret");
+              return resolve();
+            }
+            var ch = text.charAt(idx - 1);
+            var pause = /[，。！？；：,.!?]/.test(ch) ? speed + 18 : speed;
+            setTimeout(step, pause);
+          }
+          setTimeout(step, 25);
+        });
+      }
+
+      function runTypingEffect(container) {
+        var nodes = Array.prototype.slice.call(container.querySelectorAll(".js-typed"));
+        if (!nodes.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        typingRunId += 1;
+        var currentRun = typingRunId;
+        var chain = Promise.resolve();
+        nodes.forEach(function (node, index) {
+          var originalText = node.textContent || "";
+          chain = chain.then(function () {
+            return typeTextNode(node, originalText, currentRun, index === 0 ? 10 : 8);
+          });
+        });
+      }
+
+      function startThinkingEffect() {
+        var dots = 0;
+        analyzingStep.textContent = "微光 AI 正在深度阅读你的心声";
+        return setInterval(function () {
+          dots = (dots + 1) % 4;
+          analyzingStep.textContent = "微光 AI 正在深度阅读你的心声" + ".".repeat(dots);
+        }, 420);
+      }
+
+      async function runAnalyzingThenReport(text) {
+        showPanel("analyzing");
+        var tick = startThinkingEffect();
+        try {
+          var aiResult = await callAI(text);
+          clearInterval(tick);
+          latestAiResult = aiResult;
+          latestUserText = text;
+          saveAnalysisRecord(text, aiResult);
+          reportContent.innerHTML = buildScreeningReportHtml(aiResult, text);
+          showPanel("report");
+          runTypingEffect(reportContent);
+        } catch (err) {
+          clearInterval(tick);
+          showPanel("input");
+          var msg = String((err && err.message) || "");
+          if (/Insufficient Balance/i.test(msg)) {
+            moodError.textContent = "微光 AI 服务余额不足，请充值后再试。";
+          } else if (/Failed to fetch|NetworkError|TypeError/i.test(msg)) {
+            moodError.textContent = "无法连接本地微光 AI 服务，请确认你是通过 http://localhost:3000 打开页面。";
+          } else if (/401|403|unauthorized|invalid api key/i.test(msg)) {
+            moodError.textContent = "微光 AI Key 无效或无权限，请检查服务端配置。";
+          } else if (/invalid_ai_payload/i.test(msg)) {
+            moodError.textContent = "微光 AI 返回格式异常，已收到响应但无法解析，请重试一次。";
+          } else {
+            moodError.textContent = "微光 AI 请求失败：" + msg;
+          }
+          moodError.classList.add("is-visible");
+        }
+      }
+
+      openBtn.addEventListener("click", openModal);
+      closeBtn.addEventListener("click", closeModal);
+      cancelBtn.addEventListener("click", closeModal);
+      closeReportBtn.addEventListener("click", closeModal);
+
+      if (downloadReportBtn) {
+        downloadReportBtn.addEventListener("click", function () {
+          if (!latestAiResult) {
+            alert("请先生成分析报告后再下载/打印。");
+            return;
+          }
+          openStudentPrintPreview(latestAiResult, latestUserText);
+        });
+      }
+
+      panelReport.addEventListener("click", function (e) {
+        var bookBtn = e.target.closest(".js-book-consult");
+        if (!bookBtn) return;
+        e.preventDefault();
+        closeModal();
+        window.setTimeout(function () {
+          window.location.hash = "booking";
+          var navEl = document.getElementById("booking");
+          if (navEl && typeof navEl.scrollIntoView === "function") {
+            navEl.scrollIntoView({ behavior: "smooth", block: "start" });
+          } else {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+          window.alert(
+            "【演示】已为您定位到页面顶部「预约管理」入口。正式使用请在校园系统中完成实名预约，或联系驻校心理老师安排面谈。"
+          );
+        }, 80);
+      });
+
+      submitBtn.addEventListener("click", async function () {
+        var v = textarea.value.trim();
+        if (!v) {
+          moodError.classList.add("is-visible");
+          textarea.focus();
+          return;
+        }
+        moodError.classList.remove("is-visible");
+        moodError.textContent = "请先输入一段描述，再提交。";
+        submitBtn.disabled = true;
+        try {
+          await runAnalyzingThenReport(v);
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+
+      backdrop.addEventListener("click", function (e) {
+        if (e.target === backdrop) {
+          closeModal();
+        }
+      });
+
+      var moodShell = backdrop.querySelector(".mood-modal-shell");
+      if (moodShell) {
+        moodShell.addEventListener("click", function (e) {
+          if (e.target === moodShell) {
+            closeModal();
+          }
+        });
+      }
+    })();
+
+    (function () {
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function closeAllModals() {
+        document.querySelectorAll(".modal-backdrop.is-open").forEach(function (el) {
+          el.classList.remove("is-open");
+          el.hidden = true;
+        });
+        document.body.style.overflow = "";
+      }
+
+      function openModal(el) {
+        closeAllModals();
+        el.hidden = false;
+        el.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function bindBackdropClose(backdropId, closeSelectors) {
+        var bd = document.getElementById(backdropId);
+        if (!bd) return;
+        closeSelectors.forEach(function (sel) {
+          var node = document.querySelector(sel);
+          if (node) {
+            node.addEventListener("click", closeAllModals);
+          }
+        });
+        bd.addEventListener("click", function (e) {
+          if (e.target === bd) {
+            closeAllModals();
+          }
+        });
+      }
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && document.querySelector(".modal-backdrop.is-open")) {
+          closeAllModals();
+        }
+      });
+
+      var reportModal = document.getElementById("toolboxReportModal");
+      document.getElementById("openToolboxReport").addEventListener("click", function () {
+        openModal(reportModal);
+        var alias = document.getElementById("caseAlias");
+        var out = document.getElementById("caseDraftOutput");
+        var err = document.getElementById("caseNotesError");
+        out.style.display = "none";
+        out.innerHTML = "";
+        document.getElementById("caseNotes").value = "";
+        if (alias) alias.value = "";
+        if (err) err.classList.remove("is-visible");
+        setTimeout(function () {
+          if (alias) alias.focus();
+        }, 50);
+      });
+      bindBackdropClose("toolboxReportModal", ["#closeToolboxReport", "#cancelToolboxReport"]);
+
+      document.getElementById("generateCaseDraft").addEventListener("click", function () {
+        var alias = (document.getElementById("caseAlias").value || "").trim() || "（未填写化名）";
+        var notes = (document.getElementById("caseNotes").value || "").trim();
+        var out = document.getElementById("caseDraftOutput");
+        var err = document.getElementById("caseNotesError");
+        if (!notes) {
+          if (err) err.classList.add("is-visible");
+          document.getElementById("caseNotes").focus();
+          return;
+        }
+        if (err) err.classList.remove("is-visible");
+        out.style.display = "block";
+        out.innerHTML =
+          '<p style="color:#5a6b7d;font-size:13px;margin-bottom:10px">正在整理草稿…</p>';
+        setTimeout(function () {
+          out.innerHTML =
+            "<h3>一、基本信息</h3><p>对象：" +
+            escapeHtml(alias) +
+            "</p>" +
+            "<h3>二、主诉与观察摘要</h3><p>" +
+            escapeHtml(notes.length > 400 ? notes.slice(0, 400) + "…" : notes) +
+            "</p>" +
+            "<h3>三、初步梳理（待核实）</h3><p>情绪与行为：需结合日常表现与多方信息进一步确认。</p><p>支持资源：家庭与同伴支持情况建议在后续会谈中补充。</p>" +
+            "<h3>四、后续建议（模板）</h3><p>1. 约定下次会谈焦点；2. 必要时启动班主任/家长协同（按校规）；3. 出现自伤他伤风险时按危机预案处置。</p>" +
+            '<p class="report-disclaimer">本草稿由页面演示生成，请老师依据专业判断修改定稿，并严格遵守保密与伦理规范。</p>';
+        }, 600);
+      });
+
+      var crisisModal = document.getElementById("toolboxCrisisModal");
+      document.getElementById("openToolboxCrisis").addEventListener("click", function () {
+        openModal(crisisModal);
+      });
+      bindBackdropClose("toolboxCrisisModal", ["#closeToolboxCrisis", "#closeToolboxCrisisBtn"]);
+
+      var lessonModal = document.getElementById("toolboxLessonModal");
+      var lessonOutput = document.getElementById("lessonOutput");
+      document.getElementById("openToolboxLesson").addEventListener("click", function () {
+        openModal(lessonModal);
+        lessonOutput.classList.remove("is-visible");
+        lessonOutput.innerHTML = "";
+      });
+      bindBackdropClose("toolboxLessonModal", ["#closeToolboxLesson", "#cancelToolboxLesson"]);
+
+      var lessonBodies = {
+        emotion:
+          "<h3>课程名称</h3><p>情绪识别与调节</p>" +
+          "<h3>教学目标</h3><p>能说出两种基本情绪；能尝试一种自我调节小技巧。</p>" +
+          "<h3>环节与用时（40 分钟）</h3><p><strong>1. 暖身（5′）</strong> 情绪词汇接龙。</p><p><strong>2. 主体（22′）</strong> 情景讨论＋「情绪-想法-行为」三角简介。</p><p><strong>3. 练习（8′）</strong> 呼吸放松或「五感着陆」二选一。</p><p><strong>4. 总结（5′）</strong> 一人一句分享收获。</p>" +
+          "<h3>教具与材料</h3><p>情绪卡片、工作纸（可投影）。</p>" +
+          '<p class="report-disclaimer">演示大纲，请按班级实际调整难度与活动安全。</p>',
+        stress:
+          "<h3>课程名称</h3><p>考试压力与自我关怀</p>" +
+          "<h3>教学目标</h3><p>能识别自己的压力信号；能列出两项可执行的自我关怀行动。</p>" +
+          "<h3>环节与用时（45 分钟）</h3><p><strong>1. 导入（5′）</strong> 压力曲线小调查（举手）。</p><p><strong>2. 主体（25′）</strong> 压力来源分类；介绍「可控/不可控」与应对策略。</p><p><strong>3. 练习（10′）</strong> 制定「一周微行动」计划（书写）。</p><p><strong>4. 总结（5′）</strong> 资源提醒：心理老师、同伴、家长。</p>" +
+          "<h3>教具与材料</h3><p>压力清单工作纸、彩笔。</p>" +
+          '<p class="report-disclaimer">演示大纲，考前季可配合年级组统一安排。</p>',
+        social:
+          "<h3>课程名称</h3><p>同伴沟通与边界感</p>" +
+          "<h3>教学目标</h3><p>理解「边界」的含义；练习一句拒绝或表达需求的用语。</p>" +
+          "<h3>环节与用时（40 分钟）</h3><p><strong>1. 暖身（6′）</strong> 两两分享：最近一则人际小困扰（自愿）。</p><p><strong>2. 主体（20′）</strong> 案例讨论＋「我信息」表达法。</p><p><strong>3. 练习（10′）</strong> 角色扮演：拒绝不合理请求。</p><p><strong>4. 总结（4′）</strong> 强调求助渠道与尊重差异。</p>" +
+          "<h3>教具与材料</h3><p>情境卡、反馈原则海报（可板书）。</p>" +
+          '<p class="report-disclaimer">演示大纲，角色扮演时注意分组与课堂安全。</p>',
+      };
+
+      document.getElementById("generateLesson").addEventListener("click", function () {
+        var key = document.getElementById("lessonTopic").value;
+        lessonOutput.innerHTML = lessonBodies[key] || lessonBodies.emotion;
+        lessonOutput.classList.add("is-visible");
+      });
+
+      var planGenModal = document.getElementById("toolboxPlanGenModal");
+      var planOutput = document.getElementById("planDraftOutput");
+      document.getElementById("openToolboxPlanGen").addEventListener("click", function () {
+        openModal(planGenModal);
+        planOutput.classList.remove("is-visible");
+        planOutput.innerHTML = "";
+        document.getElementById("planTopicInput").value = "";
+      });
+      bindBackdropClose("toolboxPlanGenModal", ["#closeToolboxPlanGen", "#cancelToolboxPlanGen"]);
+
+      document.getElementById("generatePlanDraft").addEventListener("click", function () {
+        var topic = (document.getElementById("planTopicInput").value || "").trim() || "情绪识别与自我关怀";
+        var stage = document.getElementById("planStageSelect").value;
+        var stageMap = {
+          primary: {
+            label: "小学",
+            tone: "语气温柔、鼓励表达，避免抽象概念，更多使用故事与具象比喻。",
+            depth: "活动以短时互动为主，单个任务不超过8分钟，强调参与感和安全感。",
+            flow: "1) 情绪热身卡（5分钟） 2) 故事共情提问（10分钟） 3) 表达小游戏（12分钟） 4) 小组分享（8分钟） 5) 温柔收束（5分钟）。",
+          },
+          middle: {
+            label: "初中",
+            tone: "语气平等真诚，强调“被理解”和同伴支持，减少说教。",
+            depth: "活动加入情境讨论与合作任务，训练情绪识别-想法-行为的基本链路。",
+            flow: "1) 快速投票（5分钟） 2) 压力情境讨论（12分钟） 3) 微光 AI 案例拆解（12分钟） 4) 行动清单共创（8分钟） 5) 复盘总结（3分钟）。",
+          },
+          high: {
+            label: "高中",
+            tone: "语气理性且尊重自主，强调自我效能、策略选择和现实可执行性。",
+            depth: "活动包含认知重评、目标拆解与自我管理计划，讨论深度更高。",
+            flow: "1) 压力源自评（5分钟） 2) 认知偏差辨识（12分钟） 3) 应对策略推演（12分钟） 4) 个人行动计划（8分钟） 5) 资源链接总结（3分钟）。",
+          },
+        };
+        var cfg = stageMap[stage] || stageMap.middle;
+        planOutput.innerHTML =
+          "<h3>课程主题</h3><p>" +
+          escapeHtml(topic) +
+          "</p><h3>适用学段</h3><p>" +
+          escapeHtml(cfg.label) +
+          "</p><h3>微光 AI 语气策略</h3><p>" +
+          escapeHtml(cfg.tone) +
+          "</p><h3>活动设计深度</h3><p>" +
+          escapeHtml(cfg.depth) +
+          "</p><h3>课堂流程</h3><p>" +
+          escapeHtml(cfg.flow) +
+          "</p><h3>教学目标</h3><p>帮助学生提升情绪觉察能力、支持性表达能力与现实应对能力。</p><h3>课后任务</h3><p>完成一张“微光情绪记录卡”，记录一项可执行的自我支持行动。</p><p class='report-disclaimer'>微光出品 · AI 教案草案（请结合班级学情二次调整）</p>";
+        planOutput.classList.add("is-visible");
+      });
+
+      var tipsModal = document.getElementById("toolboxTipsModal");
+      var tipsBox = document.getElementById("tipsQuoteBox");
+      var tipsPool = [
+        "微光 AI：你不是在独自扛住全班，你是在陪每个孩子一点点长大。",
+        "微光 AI：先照顾好老师自己的呼吸，才有余力照亮学生的情绪。",
+        "微光 AI：教育不是一口气跑完，而是和孩子一起走稳每一步。",
+        "微光 AI：允许自己慢一点，是为了让每一次介入更有质量。",
+      ];
+      function drawTip() {
+        tipsBox.innerHTML = "<p style='line-height:1.8'>" + escapeHtml(tipsPool[Math.floor(Math.random() * tipsPool.length)]) + "</p>";
+      }
+      document.getElementById("openToolboxTips").addEventListener("click", function () {
+        openModal(tipsModal);
+        drawTip();
+      });
+      bindBackdropClose("toolboxTipsModal", ["#closeToolboxTips", "#cancelToolboxTips"]);
+      document.getElementById("refreshTipsQuote").addEventListener("click", drawTip);
+    })();
+  </script>
+  <script>
+    (function () {
+      var grid = document.getElementById("processFlowGrid");
+      if (!grid) return;
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        grid.classList.add("is-inview");
+        return;
+      }
+
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            grid.classList.add("is-inview");
+            io.unobserve(grid);
+          });
+        },
+        { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.22 }
+      );
+
+      io.observe(grid);
+    })();
+  </script>
+</body>
+</html>
