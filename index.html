@@ -1056,6 +1056,71 @@
       line-height: 1.55;
     }
 
+    .local-dev-panel {
+      margin: 0 auto 40px;
+      max-width: 720px;
+      border-radius: 16px;
+      border: 1px dashed rgba(58, 110, 165, 0.35);
+      background: rgba(255, 255, 255, 0.45);
+      padding: 12px 16px 14px;
+    }
+
+    .local-dev-details summary {
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      color: #3d5a7a;
+      list-style: none;
+    }
+
+    .local-dev-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .local-dev-body {
+      margin-top: 12px;
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #5a6b7d;
+    }
+
+    .local-dev-body code {
+      font-size: 12px;
+      background: rgba(58, 110, 165, 0.08);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .local-dev-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .local-dev-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(58, 110, 165, 0.25);
+      font-family: inherit;
+      font-size: 13px;
+    }
+
+    .local-dev-actions .btn-secondary,
+    .local-dev-actions .btn-primary {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+
+    .local-dev-status {
+      font-size: 12px;
+      color: #5f8f62;
+      margin-top: 8px;
+    }
+
     .toolbox-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1449,6 +1514,34 @@
         </button>
       </div>
     </section>
+
+    <section class="local-dev-panel" aria-labelledby="localDevTitle">
+      <details class="local-dev-details">
+        <summary id="localDevTitle">本地预览：服务端未配置环境变量时填写 DeepSeek 密钥</summary>
+        <div class="local-dev-body">
+          <p>
+            部署环境（如 Vercel）请设置 <code>DEEPSEEK_API_KEY</code>，不要在代码或仓库中硬编码密钥。若仅在本地运行
+            <code>node server.js</code> 且未配置该变量，可将密钥临时填在下方；密钥保存在本机浏览器
+            <strong>sessionStorage</strong>，关闭标签页后即清除，不会写入项目文件。
+          </p>
+          <div class="local-dev-row">
+            <input
+              type="password"
+              class="local-dev-input"
+              id="localDeepseekKeyInput"
+              autocomplete="off"
+              placeholder="粘贴密钥后点击保存（仅本地预览）"
+              maxlength="200"
+            />
+            <div class="local-dev-actions">
+              <button type="button" class="btn-primary" id="saveLocalDeepseekKey">保存</button>
+              <button type="button" class="btn-secondary" id="clearLocalDeepseekKey">清除</button>
+            </div>
+          </div>
+          <p class="local-dev-status" id="localDevStatus" aria-live="polite"></p>
+        </div>
+      </details>
+    </section>
   </div>
 
   <div
@@ -1662,8 +1755,31 @@
       var reportContent = document.getElementById("reportContent");
       var closeReportBtn = document.getElementById("closeReport");
       var downloadReportBtn = document.getElementById("downloadReportBtn");
-      const API_KEY = ""; // 安全占位：真实 Key 仅放在后端，不在前端使用
       const RECORDS_STORAGE_KEY = "mindplatform_ai_records";
+      const LOCAL_DEEPSEEK_SESSION_KEY = "mindplatform_local_deepseek_session";
+
+      function getLocalDeepseekKey() {
+        try {
+          return (sessionStorage.getItem(LOCAL_DEEPSEEK_SESSION_KEY) || "").trim();
+        } catch (e) {
+          return "";
+        }
+      }
+
+      function setLocalDeepseekKey(value) {
+        try {
+          if (value) sessionStorage.setItem(LOCAL_DEEPSEEK_SESSION_KEY, value);
+          else sessionStorage.removeItem(LOCAL_DEEPSEEK_SESSION_KEY);
+        } catch (e) {}
+      }
+
+      function refreshLocalKeyStatus() {
+        var el = document.getElementById("localDevStatus");
+        if (!el) return;
+        el.textContent = getLocalDeepseekKey()
+          ? "已在本浏览器会话中保存临时密钥（关闭标签页后清除）。线上部署请使用服务端环境变量。"
+          : "";
+      }
 
       var lastFocus = null;
       var typingRunId = 0;
@@ -1993,7 +2109,7 @@
       }
 
       async function callAI(userText) {
-        var endpoint = "/api/ai-analysis";
+        var endpoint = "/api/analyze";
         var systemPrompt =
           [
             "你是微光 AI，中国校园心理健康专家。",
@@ -2015,21 +2131,29 @@
             "}",
           ].join("\n");
 
+        var reqBody = {
+          userText: userText,
+          systemPrompt: systemPrompt,
+        };
+        var lk = getLocalDeepseekKey();
+        if (lk) reqBody.deepseekApiKey = lk;
+
         var res = await fetch(endpoint, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            userText: userText,
-            systemPrompt: systemPrompt,
-          }),
+          body: JSON.stringify(reqBody),
         });
 
         var data = await res.json().catch(function () {
           return {};
         });
         if (!res.ok) {
+          var errCode = data && data.error ? String(data.error) : "";
+          if (errCode === "missing_api_key") {
+            throw new Error("missing_api_key");
+          }
           var detailMsg =
             data &&
             data.details &&
@@ -2255,6 +2379,9 @@
           var msg = String((err && err.message) || "");
           if (/Insufficient Balance/i.test(msg)) {
             moodError.textContent = "微光 AI 服务余额不足，请充值后再试。";
+          } else if (/^missing_api_key$/i.test(msg)) {
+            moodError.textContent =
+              "未配置 DEEPSEEK_API_KEY。请在部署环境设置该变量，或在页面底部「本地预览」中填写临时密钥后重试。";
           } else if (/Failed to fetch|NetworkError|TypeError/i.test(msg)) {
             moodError.textContent = "无法连接本地微光 AI 服务，请确认你是通过 http://localhost:3000 打开页面。";
           } else if (/401|403|unauthorized|invalid api key/i.test(msg)) {
@@ -2272,6 +2399,36 @@
       closeBtn.addEventListener("click", closeModal);
       cancelBtn.addEventListener("click", closeModal);
       closeReportBtn.addEventListener("click", closeModal);
+
+      refreshLocalKeyStatus();
+      var localKeyInput = document.getElementById("localDeepseekKeyInput");
+      var saveLocalKeyBtn = document.getElementById("saveLocalDeepseekKey");
+      var clearLocalKeyBtn = document.getElementById("clearLocalDeepseekKey");
+      if (saveLocalKeyBtn && localKeyInput) {
+        saveLocalKeyBtn.addEventListener("click", function () {
+          var v = (localKeyInput.value || "").trim();
+          if (!v) {
+            var st = document.getElementById("localDevStatus");
+            if (st) st.textContent = "请先粘贴密钥，或点击「清除」。";
+            localKeyInput.focus();
+            return;
+          }
+          setLocalDeepseekKey(v);
+          localKeyInput.value = "";
+          refreshLocalKeyStatus();
+          var st2 = document.getElementById("localDevStatus");
+          if (st2) st2.textContent = "已保存。密钥已从输入框清空，仍保存在本会话中。";
+        });
+      }
+      if (clearLocalKeyBtn && localKeyInput) {
+        clearLocalKeyBtn.addEventListener("click", function () {
+          setLocalDeepseekKey("");
+          localKeyInput.value = "";
+          refreshLocalKeyStatus();
+          var st = document.getElementById("localDevStatus");
+          if (st) st.textContent = "已清除本会话中的临时密钥。";
+        });
+      }
 
       if (downloadReportBtn) {
         downloadReportBtn.addEventListener("click", function () {

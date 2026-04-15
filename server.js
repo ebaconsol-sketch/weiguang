@@ -3,8 +3,15 @@ const fs = require("fs");
 const path = require("path");
 
 const PORT = process.env.PORT || 3000;
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY || "";
 const DEEPSEEK_BASE_URL = (process.env.DEEPSEEK_BASE_URL || "https://api.deepseek.com").replace(/\/+$/, "");
+
+/** 优先使用环境变量 DEEPSEEK_API_KEY（如 Vercel 后台配置）；仅当未设置时才使用请求体中的临时密钥（本地预览）。 */
+function resolveDeepseekApiKey(body) {
+  const envKey = (process.env.DEEPSEEK_API_KEY || "").trim();
+  if (envKey) return envKey;
+  const fromBody = body && typeof body.deepseekApiKey === "string" ? body.deepseekApiKey.trim() : "";
+  return fromBody;
+}
 
 function sendJson(res, statusCode, data) {
   res.writeHead(statusCode, { "Content-Type": "application/json; charset=utf-8" });
@@ -26,15 +33,20 @@ function readBody(req) {
 }
 
 async function handleAIProxy(req, res) {
-  if (!DEEPSEEK_API_KEY) {
-    return sendJson(res, 500, { error: "missing_server_api_key", message: "请在服务端设置 DEEPSEEK_API_KEY" });
-  }
-
   let body;
   try {
     body = JSON.parse(await readBody(req));
   } catch (err) {
     return sendJson(res, 400, { error: "invalid_json" });
+  }
+
+  const apiKey = resolveDeepseekApiKey(body);
+  if (!apiKey) {
+    return sendJson(res, 503, {
+      error: "missing_api_key",
+      message:
+        "未配置 DEEPSEEK_API_KEY。请在部署环境（如 Vercel）设置该环境变量；本地预览可在页面底部填写临时密钥（仅当服务端未配置时由浏览器传入）。",
+    });
   }
 
   const userText = String(body.userText || "").trim();
@@ -48,7 +60,7 @@ async function handleAIProxy(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${DEEPSEEK_API_KEY}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model: "deepseek-chat",
@@ -112,7 +124,7 @@ function serveStaticFile(res, fileName) {
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
 
-  if (req.method === "POST" && url.pathname === "/api/ai-analysis") {
+  if (req.method === "POST" && (url.pathname === "/api/ai-analysis" || url.pathname === "/api/analyze")) {
     handleAIProxy(req, res);
     return;
   }
